@@ -1,3 +1,4 @@
+import AuthButton from "@/components/auth-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
           <CardContent>Et ceci est le contenu</CardContent>
         </CardHeader>
       </Card>
+      <AuthButton />
     </>
   );
 }
