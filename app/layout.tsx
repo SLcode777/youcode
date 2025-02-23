@@ -1,13 +1,13 @@
 // app/layout.
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
-import { TailwindIndicator } from "./../src/components/TailwindIndicator";
 import { SiteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { PropsWithChildren } from "react";
 import Providers from "./../app/providers";
+import { TailwindIndicator } from "./../src/components/TailwindIndicator";
 import "./globals.css";
 
 const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -29,7 +29,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
           )}
         >
           <Providers>
-            <div className="relative flex min-h-screen flex-col">
+            <div className="relative flex min-h-screen flex-col max-w-7xl px-8">
               <Header />
               <div className="flex-1">{children}</div>
               <Footer />

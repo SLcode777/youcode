@@ -1,6 +1,8 @@
 "use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { DropdownUserMenu } from "../components/dropdown-usermenu";
+import { Button } from "./ui/button";
 
 export default function AuthButton() {
   const { data: session, status } = useSession();
@@ -10,8 +12,8 @@ export default function AuthButton() {
   }
 
   return session ? (
-    <button onClick={() => signOut()}>Se déconnecter</button>
+    <DropdownUserMenu />
   ) : (
-    <button onClick={() => signIn()}>Se connecter</button>
+    <Button onClick={() => signIn()}>Se connecter</Button>
   );
 }
