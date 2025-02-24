@@ -16,6 +16,7 @@ export default function LoginButton() {
 
   return (
     <Button
+      className="bg-transparent"
       variant="outline"
       size="sm"
       onClick={() => {

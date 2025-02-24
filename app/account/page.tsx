@@ -1,8 +1,17 @@
 import LogoutButton from "@/components/features/login-logout-menu/logout-button";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { buttonVariants } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import clsx from "clsx";
 import { getServerSession, Session } from "next-auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[nextauth]";
 
@@ -16,10 +25,10 @@ export default async function AccountPage(props: AccountPageProps) {
     redirect("/");
   }
 
-  const user = session.user;
+  const user = session?.user;
   return (
     <>
-      <Card className="w-full max-w-[500px] bg-neutral-900">
+      <Card className="w-full max-w-lg m-auto bg-neutral-900">
         <CardHeader className="flex flex-row items-center gap-4">
           <Avatar className="">
             <AvatarFallback>{props.user?.name?.[0]}</AvatarFallback>
@@ -33,23 +42,41 @@ export default async function AccountPage(props: AccountPageProps) {
               />
             )}
           </Avatar>
-          <div className="leading-loose ">
-            <p className="font-bold">{user?.email}</p>
-            <p>{user?.name}</p>
+          <div className="flex flex-col gap-2">
+            <CardTitle>{user?.email}</CardTitle>
+            <CardDescription>{user?.name}</CardDescription>
           </div>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-2">
-            <Button className="bg-transparent" variant={"outline"}>
+            <Link
+              href="/account/settings"
+              className={clsx(
+                buttonVariants({
+                  variant: "outline",
+                  size: "lg",
+                }),
+                "bg-transparent"
+              )}
+            >
               Modifier le profil
-            </Button>
-            <Button className="bg-transparent" variant={"outline"}>
+            </Link>
+            <Link
+              href="/admin"
+              className={clsx(
+                buttonVariants({
+                  variant: "outline",
+                  size: "lg",
+                }),
+                "bg-transparent"
+              )}
+            >
               Admin
-            </Button>
+            </Link>
           </div>
-          <div className="flex flex-col items-end justify-end w-full mt-2">
+          <CardFooter className=" flex flex-row-reverse mt-2 p-0">
             <LogoutButton />
-          </div>
+          </CardFooter>
         </CardContent>
       </Card>
     </>
