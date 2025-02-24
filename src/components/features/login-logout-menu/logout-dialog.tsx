@@ -13,12 +13,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../ui/alert-dialog";
+} from "../../ui/alert-dialog";
+import LogoutButton from "./logout-button";
 
 export function LogoutDialog() {
   const mutation = useMutation({
     mutationFn: async () => {
-      signOut();
+      signOut({ callbackUrl: "/" });
     },
   });
 
@@ -30,9 +31,7 @@ export function LogoutDialog() {
             className="  place-self-center items-center justify-center "
             size={20}
           />
-          <button className="w-full text-left text-sm dark:hover:bg-neutral-800 hover:bg-neutral-100 rounded-sm leading-6 border-green-600">
-            Se Déconnecter
-          </button>
+          <LogoutButton />
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent>

@@ -1,16 +1,17 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-// import { DropdownUserMenu } from "../components/dropdown-usermenu";
 import { useMutation } from "@tanstack/react-query";
 import { Loader, LogIn } from "lucide-react";
-import { Button } from "../ui/button";
+import { signIn } from "next-auth/react";
+import { Button } from "../../ui/button";
 
 // export type LoginButtonProps = {};
 
 export default function LoginButton() {
   const mutation = useMutation({
-    mutationFn: async () => signIn(),
+    mutationFn: async () => {
+      signIn();
+    },
   });
 
   return (

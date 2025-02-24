@@ -1,9 +1,9 @@
 import { SiteConfig } from "@/lib/site-config";
 import Image from "next/image";
 import Link from "next/link";
+import { LoginLogoutContainer } from "../features/login-logout-menu/login-logout-container";
 import { ThemeToggle } from "../ThemeToggle";
 import { Typography } from "../ui/Typography";
-import { LoginLogoutContainer } from "../features/login-logout-container";
 
 export function Header() {
   return (
