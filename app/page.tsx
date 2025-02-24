@@ -5,8 +5,8 @@ export default function Home() {
     <>
       <Card className="">
         <CardHeader>
-          <CardTitle>CECI EST LE TITRE DE LA CARD</CardTitle>
-          <CardContent>Et ceci est le contenu</CardContent>
+          <CardTitle>CARD TITLE</CardTitle>
+          <CardContent>CARD CONTENT</CardContent>
         </CardHeader>
       </Card>
     </>

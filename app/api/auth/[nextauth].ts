@@ -11,8 +11,8 @@ export const authOptions: AuthOptions = {
   },
   providers: [
     GithubProvider({
-      clientId: env.GITHUB_ID,
-      clientSecret: env.GITHUB_SECRET,
+      clientId: env.AUTH_GITHUB_ID,
+      clientSecret: env.AUTH_GITHUB_SECRET,
     }),
     // GoogleProvider({
     //   clientId: env.GOOGLE_ID,
