@@ -63,7 +63,8 @@ model VerificationToken {
 }
 
 model Course {
-  id  String  @id @default(cuid())
-  name  String
-  logo  String?
+  id          String  @id @default(cuid())
+  name        String
+  logo        String?
+  createdAt  DateTime @default(now())
 }

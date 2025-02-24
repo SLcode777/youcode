@@ -12,7 +12,11 @@ import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 
-const courses = await prisma.course.findMany();
+const courses = await prisma.course.findMany({
+  orderBy: {
+    createdAt: "asc",
+  },
+});
 
 export default function AdminCoursesPage() {
   return (
@@ -35,14 +39,16 @@ export default function AdminCoursesPage() {
               {courses.map((course) => (
                 <TableRow key={course.id} className="flex flex-row ">
                   <Link href={`/admin/courses/${course.name}`}>
-                    <TableCell className="w-16">
-                      <Image
-                        src={course.logo}
-                        alt={`logo`}
-                        width={24}
-                        height={24}
-                      />
-                    </TableCell>
+                    {courses ? (
+                      <TableCell className="w-16">
+                        <Image
+                          src={course.logo ?? "/file.svg"}
+                          alt={`logo`}
+                          width={24}
+                          height={24}
+                        />
+                      </TableCell>
+                    ) : null}
                     <TableCell>{course.name}</TableCell>
                   </Link>
                 </TableRow>
