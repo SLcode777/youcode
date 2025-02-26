@@ -24,7 +24,7 @@ export default function PageSelector({
   const router = useRouter();
 
   const handleValueChange = (value: string) => {
-    router.push(`courses/${courseName}?page=${value}`);
+    router.push(`${courseName}?page=${value}`);
   };
 
   return (

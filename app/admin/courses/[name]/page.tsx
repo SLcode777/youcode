@@ -83,14 +83,17 @@ export default async function CoursePage(props: {
         <div className="text-xl font-extrabold ">{course?.name}</div>
       </div>
       <hr className="mb-4" />
-      <div className="flex flex-row gap-2">
-        <Card className="bg-neutral-900">
+      <div className="flex flex-col md:flex-row gap-2">
+        <Card
+          id="UserCard"
+          className="bg-neutral-900 w-full md:w-2/3 h-[36dvh] flex flex-col"
+        >
           <CardHeader>
             <CardTitle className="text-justify font-semibold text-lg">
               Liste des élèves
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex-1 overflow-y-auto">
             <Table>
               <TableHeader>
                 <TableRow className="">
@@ -137,23 +140,21 @@ export default async function CoursePage(props: {
               </TableBody>
             </Table>
           </CardContent>
-          <CardFooter>
-            <div className="flex justify-between items-center mt-4 gap-1">
-              <PreviousButton currentPage={page} courseName={params.name} />
-              <PageSelector
-                currentPage={page}
-                totalPages={totalPages}
-                courseName={params.name}
-              />
-              <NextButton
-                currentPage={page}
-                totalPages={totalPages}
-                courseName={params.name}
-              />
-            </div>
+          <CardFooter className="flex flex-row  gap-1">
+            <PreviousButton currentPage={page} courseName={params.name} />
+            <PageSelector
+              currentPage={page}
+              totalPages={totalPages}
+              courseName={params.name}
+            />
+            <NextButton
+              currentPage={page}
+              totalPages={totalPages}
+              courseName={params.name}
+            />
           </CardFooter>
         </Card>
-        <Card className="bg-neutral-900">
+        <Card id="CourseInfoCard" className="bg-neutral-900 w-full md:w-1/3">
           <CardHeader>
             <CardTitle>
               <div className="flex flex-row gap-4  m-auto text-justify">
