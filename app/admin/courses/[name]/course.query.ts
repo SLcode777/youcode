@@ -23,6 +23,11 @@ export const getCourse = async ({
       users: {
         take: 5,
         skip: Math.max(0, userPage * 5),
+        orderBy: {
+          user: {
+            createdAt: "asc",
+          },
+        },
         select: {
           canceledAt: true,
           id: true,
@@ -32,6 +37,7 @@ export const getCourse = async ({
               id: true,
               email: true,
               image: true,
+              createdAt: true,
             },
           },
         },
@@ -76,32 +82,3 @@ export async function Course({ params }: CourseProps) {
   });
   console.log("console detail du cours: ", course);
 }
-// // interface CourseStudentsProps {
-// //   params: {
-// //     courseName: string;
-// //   };
-// // }
-
-// export async function courseStudents(courseName: string) {
-//   const students = await prisma.user.findMany({
-//     where: {
-//       CourseOnUser: {
-//         some: {
-//           course: {
-//             name: courseName,
-//           },
-//         },
-//       },
-//     },
-
-//     select: {
-//       id: true,
-//       name: true,
-//       image: true, // Ajout pour l'avatar
-//     },
-//   });
-//   console.log("Fetching students for:", courseName);
-//   console.log("Fetched students:", students);
-
-//   return students;
-// }

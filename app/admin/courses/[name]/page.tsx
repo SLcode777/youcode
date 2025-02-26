@@ -1,6 +1,8 @@
 import NextButton from "@/components/features/course-page-selector/next-button";
 import PageSelector from "@/components/features/course-page-selector/page-selector";
 import PreviousButton from "@/components/features/course-page-selector/previous-button";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -83,7 +85,7 @@ export default async function CoursePage(props: {
         <div className="text-xl font-extrabold ">{course?.name}</div>
       </div>
       <hr className="mb-4" />
-      <div className="flex flex-col md:flex-row gap-2">
+      <div className="flex flex-col-reverse md:flex-row gap-2">
         <Card
           id="UserCard"
           className="bg-neutral-900 w-full md:w-2/3 h-[36dvh] flex flex-col"
@@ -168,13 +170,32 @@ export default async function CoursePage(props: {
                   {course?.name}
                 </p>
               </div>
-              <div className="flex flex-col gap-2 mt-6">
-                <div className="">DRAFT</div>
-                <div className="font-normal">{nbUser}</div>
-                <div className="font-normal">{nbLessons}</div>
-              </div>
             </CardTitle>
           </CardHeader>
+          <CardContent>
+            <div className="flex flex-col gap-1 mb-2">
+              {course.state == "DRAFT" ? (
+                <Badge className="w-fit mb-2" variant={"outline"}>
+                  {course.state}
+                </Badge>
+              ) : (
+                <Badge className="w-fit mb-2" variant={"default"}>
+                  {course.state}
+                </Badge>
+              )}
+
+              <div className="font-normal">{nbUser}</div>
+              <div className="font-normal">{nbLessons}</div>
+            </div>
+            <div className="flex flex-col mt-4 w-full gap-2">
+              <Button variant={"secondary"} className="w-full">
+                Modifier le cours
+              </Button>
+              <Button variant={"secondary"} className="w-full">
+                Modifier les leçons
+              </Button>
+            </div>
+          </CardContent>
         </Card>
       </div>
       <ClientChecker users={course.users} />

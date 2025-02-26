@@ -22,7 +22,7 @@ export default function NextButton({
         className="cursor-not-allowed "
         size={"default"}
       >
-        Next
+        Suiv.
       </Button>
     );
   }

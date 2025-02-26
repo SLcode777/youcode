@@ -20,7 +20,7 @@ export default function PreviousButton({
         className="cursor-not-allowed "
         size={"default"}
       >
-        Previous
+        Préc.
       </Button>
     );
   }
