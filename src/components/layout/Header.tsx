@@ -10,7 +10,7 @@ export function Header() {
     <header className="bg-background sticky top-0 z-40 w-full border-b mb-16 rounded-b-xl px-8">
       <div className=" w-full flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
         <div className="flex gap-2 items-center">
-          <Image src="images/logo.svg" width={50} height={35} alt="app logo" />
+          <Image src="/images/logo.svg" width={50} height={35} alt="app logo" />
 
           <Typography variant="h3" as={Link} href="/">
             {SiteConfig.title}

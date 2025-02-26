@@ -1,21 +1,72 @@
-import prisma from "@/lib/prisma";
+import NextButton from "@/components/features/course-page-selector/next-button";
+import PageSelector from "@/components/features/course-page-selector/page-selector";
+import PreviousButton from "@/components/features/course-page-selector/previous-button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { getRequiredAuthSession } from "@/lib/auth";
+import { Menu } from "lucide-react";
 import Image from "next/image";
+import ClientChecker from "./client-check";
+import { getCourse } from "./course.query";
 
-interface CoursePageProps {
-  params: {
-    name: string;
-  };
-}
+export default async function CoursePage(props: {
+  params: { name: string };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const session = await getRequiredAuthSession();
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+  console.log("params = ", params);
 
-export default async function CoursePage({ params }: CoursePageProps) {
-  const courseName = params.name;
-  const course = await prisma.course.findFirst({
-    where: {
-      name: courseName,
-    },
+  const page = Number(searchParams.page ?? 0);
+
+  const course = await getCourse({
+    courseName: params.name,
+    userId: session.user.id,
+    userPage: page,
   });
 
-  console.log(course);
+  if (!course) {
+    return <p>no course found</p>;
+  }
+
+  //Calculation of the nb of users and nb of pages
+  const totalUsers = course._count?.users ?? 0;
+  const pageSize = 5;
+  const totalPages = Math.ceil(totalUsers / pageSize);
+
+  console.log("nb total de pages : ", totalPages);
+
+  //Utils functions to display _count
+  const userCount = () => {
+    if (!totalUsers) return "Ce cours n'a aucun utilisateur";
+    if (totalUsers === 1) return `1 utilisateur`;
+    return `${totalUsers} utilisateurs`;
+  };
+
+  const lessonCount = () => {
+    const countLessons = course._count?.lessons ?? 0;
+    if (countLessons === 0) return "Ce cours ne contient pas encore de leçons";
+    if (countLessons === 1) return `1 leçon`;
+    return `${countLessons} leçons`;
+  };
+
+  const nbUser = userCount();
+  const nbLessons = lessonCount();
+
   return (
     <>
       <div className="flex flex-row gap-4 mb-2">
@@ -28,6 +79,100 @@ export default async function CoursePage({ params }: CoursePageProps) {
         <div className="text-xl font-extrabold ">{course?.name}</div>
       </div>
       <hr className="mb-4" />
+      <div className="flex flex-row gap-2">
+        <Card className="bg-neutral-900">
+          <CardHeader>
+            <CardTitle className="text-justify font-semibold text-lg">
+              Liste des élèves
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow className="">
+                  <TableHead className="w-16">Avatar</TableHead>
+                  <TableHead>Nom</TableHead>
+                  <TableHead>Email</TableHead>
+
+                  <TableHead className="text-center">Status</TableHead>
+                  <TableHead className="text-center">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {course ? (
+                  course.users ? (
+                    course.users.map((user) => (
+                      <TableRow key={user.id}>
+                        <TableCell>
+                          <Image
+                            src={user.image ?? "/file.svg"}
+                            alt={user.name ?? "user avatar"}
+                            width={32}
+                            height={32}
+                            className="rounded-full"
+                          />
+                        </TableCell>
+                        <TableCell>{user?.name ?? "Nom inconnu"}</TableCell>
+                        <TableCell>{user?.email ?? "Nom inconnu"}</TableCell>
+                        <TableCell className="text-center">`ACTIVE`</TableCell>
+                        <TableCell className="text-center">
+                          <Menu className="h-5 w-5 mx-auto cursor-pointer hover:text-primary" />
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={2} className="text-center">
+                        Aucun élève inscrit
+                      </TableCell>
+                    </TableRow>
+                  )
+                ) : (
+                  "not found"
+                )}
+              </TableBody>
+            </Table>
+          </CardContent>
+          <CardFooter>
+            <div className="flex justify-between items-center mt-4 gap-1">
+              <PreviousButton currentPage={page} courseName={params.name} />
+              <PageSelector
+                currentPage={page}
+                totalPages={totalPages}
+                courseName={params.name}
+              />
+              <NextButton
+                currentPage={page}
+                totalPages={totalPages}
+                courseName={params.name}
+              />
+            </div>
+          </CardFooter>
+        </Card>
+        <Card className="bg-neutral-900">
+          <CardHeader>
+            <CardTitle>
+              <div className="flex flex-row gap-4  m-auto text-justify">
+                <Image
+                  src={course?.logo ?? "/file.svg"}
+                  alt="course logo"
+                  width={48}
+                  height={48}
+                ></Image>
+                <p className="self-center text-2xl font-semibold">
+                  {course?.name}
+                </p>
+              </div>
+              <div className="flex flex-col gap-2 mt-6">
+                <div className="">DRAFT</div>
+                <div className="font-normal">{nbUser}</div>
+                <div className="font-normal">{nbLessons}</div>
+              </div>
+            </CardTitle>
+          </CardHeader>
+        </Card>
+      </div>
+      <ClientChecker users={course.users} />
     </>
   );
 }

@@ -71,14 +71,6 @@ export default async function AdminCoursesPage() {
           </Card>
         </LayoutContent>
       </Layout>
-      {/* <div className="flex flex-row justify-between mb-2"> */}
-      {/* <div className="text-xl font-extrabold place-self-end">Cours</div>
-        <Button variant={"secondary"}>Nouveau Cours</Button>
-      </div>
-      <hr />
-      <Card className="mt-4 bg-neutral-900">
-        <CardContent></CardContent>
-      </Card> */}
     </>
   );
 }

@@ -56,6 +56,8 @@ model User {
   CourseOnUser  CourseOnUser[]
 }
 
+
+
 model VerificationToken {
   identifier String
   token      String   @unique
@@ -72,10 +74,15 @@ model Course {
   logo          String?
   createdAt     DateTime @default(now())
   creatorId     String
-
+  state         CourseState @default(DRAFT)
   creator   User?  @relation(fields: [creatorId], references: [id])
   lessons   Lesson[]
   users     CourseOnUser[]
+}
+
+enum CourseState {
+  DRAFT
+  PUBLISHED
 }
 
 model Lesson {

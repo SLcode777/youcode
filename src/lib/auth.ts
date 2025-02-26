@@ -6,6 +6,8 @@ import {
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../app/api/auth/[nextauth]";
 
+
+
 type ParametersGetServerSession =
   | []
   | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
