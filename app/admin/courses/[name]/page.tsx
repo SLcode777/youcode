@@ -19,6 +19,7 @@ import {
 import { getRequiredAuthSession } from "@/lib/auth";
 import { Menu } from "lucide-react";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import ClientChecker from "./client-check";
 import { getCourse } from "./course.query";
 
@@ -29,7 +30,10 @@ export default async function CoursePage(props: {
   const session = await getRequiredAuthSession();
   const searchParams = await props.searchParams;
   const params = await props.params;
-  console.log("params = ", params);
+
+  if (!searchParams.page) {
+    redirect(`/admin/courses/${params.name}?page=0`);
+  }
 
   const page = Number(searchParams.page ?? 0);
 

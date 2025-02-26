@@ -19,7 +19,7 @@ export default function NextButton({
       <Button
         variant={"outline"}
         disabled
-        className="cursor-not-allowed"
+        className="cursor-not-allowed "
         size={"default"}
       >
         Next
@@ -35,6 +35,7 @@ export default function NextButton({
           variant: "outline",
           size: "default",
         })
+       
       )}
     >
       Next

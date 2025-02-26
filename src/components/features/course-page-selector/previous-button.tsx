@@ -17,7 +17,7 @@ export default function PreviousButton({
       <Button
         variant={"outline"}
         disabled
-        className="cursor-not-allowed"
+        className="cursor-not-allowed "
         size={"default"}
       >
         Previous
@@ -27,7 +27,7 @@ export default function PreviousButton({
 
   return (
     <Link
-      href={`/courses/${courseName}?page=${currentPage - 1}`}
+      href={`/admin/courses/${courseName}?page=${currentPage - 1}`}
       className={clsx(
         buttonVariants({
           variant: "outline",

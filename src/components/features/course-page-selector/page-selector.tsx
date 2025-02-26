@@ -29,7 +29,7 @@ export default function PageSelector({
 
   return (
     <Select value={currentPage.toString()} onValueChange={handleValueChange}>
-      <SelectTrigger className="w-[150px]">
+      <SelectTrigger className="w-[150px] bg-neutral-950">
         <SelectValue placeholder="Select a page" />
       </SelectTrigger>
       <SelectContent>
