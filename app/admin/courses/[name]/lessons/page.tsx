@@ -5,6 +5,7 @@ import {
   LayoutTitle,
 } from "@/components/layout/layout";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
@@ -14,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Menu } from "lucide-react";
+import { Menu, Plus } from "lucide-react";
 import Link from "next/link";
 import { getLessons } from "./lesson.query";
 
@@ -82,6 +83,12 @@ export default async function AdminLessonsPage(props: {
                   ))}
                 </TableBody>
               </Table>
+            </CardContent>
+            <CardContent>
+              <Button variant={"secondary"} className="flex flex-row w-full">
+                <Plus />
+                <p>Créer une nouvelle leçon</p>
+              </Button>
             </CardContent>
           </Card>
         </LayoutContent>
