@@ -58,8 +58,8 @@ export const getCourse = async ({
     };
   });
 
-  console.log("Fetching users for:", courseName);
-  console.log("Fetched users:", users);
+  // console.log("Fetching users for:", courseName);
+  // console.log("Fetched users:", users);
 
   return {
     ...course,

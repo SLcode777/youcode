@@ -21,7 +21,7 @@ import {
 import { getRequiredAuthSession } from "@/lib/auth";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import ClientChecker from "./client-check";
+// import ClientChecker from "./client-check";
 import { getCourse } from "./course.query";
 import { UserRow } from "./user-row";
 
@@ -31,7 +31,9 @@ export default async function CoursePage(props: {
 }) {
   const session = await getRequiredAuthSession();
   const searchParams = await props.searchParams;
+  console.log("search Params de la page de cours : ", searchParams);
   const params = await props.params;
+  console.log("params de la page de cours : ", params);
 
   if (!searchParams.page) {
     redirect(`/admin/courses/${params.name}?page=0`);
@@ -53,8 +55,6 @@ export default async function CoursePage(props: {
   const totalUsers = course._count?.users ?? 0;
   const pageSize = 5;
   const totalPages = Math.ceil(totalUsers / pageSize);
-
-  console.log("nb total de pages : ", totalPages);
 
   //Utils functions to display _count
   const userCount = () => {
@@ -182,7 +182,7 @@ export default async function CoursePage(props: {
           </CardContent>
         </Card>
       </div>
-      <ClientChecker users={course.users} />
+      {/* <ClientChecker users={course.users} /> */}
     </>
   );
 }

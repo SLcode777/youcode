@@ -5,7 +5,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { Menu } from "lucide-react";
 
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type UserRowProps = {
   user: {
@@ -19,12 +19,19 @@ type UserRowProps = {
 };
 
 export function UserRow({ user }: UserRowProps) {
+  const router = useRouter();
+
   return (
     <TableRow
       key={user.id}
       className="cursor-pointer"
-      onClick={() => redirect("/")}
+      onClick={() => {
+        router.push(`/admin/user/${user.id}`);
+      }}
     >
+      <TableCell>
+        <div>{user.id}</div>
+      </TableCell>
       <TableCell>
         <Image
           src={user.image ?? "/file.svg"}
@@ -35,7 +42,8 @@ export function UserRow({ user }: UserRowProps) {
         />
       </TableCell>
       <TableCell>{user?.name ?? "Nom inconnu"}</TableCell>
-      <TableCell>{user?.email ?? "Nom inconnu"}</TableCell>
+
+      <TableCell>{user?.email ?? "Email inconnu"}</TableCell>
       <TableCell className="text-center">
         {user.canceled ? (
           <Badge variant={"destructive"}>INACTIF</Badge>
@@ -45,7 +53,7 @@ export function UserRow({ user }: UserRowProps) {
       </TableCell>
       <TableCell className="text-center">
         <Menu
-          className="h-5 w-5 mx-auto hover:text-primary"
+          className="h-5 w-5 mx-auto hover:text-primary cursor-pointer"
           onClick={(event) => {
             event.stopPropagation();
             alert("test click menu");
