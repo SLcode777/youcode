@@ -2,7 +2,7 @@ import NextButton from "@/components/features/course-page-selector/next-button";
 import PageSelector from "@/components/features/course-page-selector/page-selector";
 import PreviousButton from "@/components/features/course-page-selector/previous-button";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -22,6 +22,7 @@ import { getRequiredAuthSession } from "@/lib/auth";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 // import ClientChecker from "./client-check";
+import Link from "next/link";
 import { getCourse } from "./course.query";
 import { UserRow } from "./user-row";
 
@@ -39,7 +40,7 @@ export default async function CoursePage(props: {
     redirect(`/admin/courses/${params.name}?page=0`);
   }
 
-  const page = Number(searchParams.page ?? 0);
+  const page = Number(searchParams.page ?? 1);
 
   const course = await getCourse({
     courseName: params.name,
@@ -140,7 +141,10 @@ export default async function CoursePage(props: {
             />
           </CardFooter>
         </Card>
-        <Card id="CourseInfoCard" className="bg-neutral-900 w-full md:w-1/3">
+        <Card
+          id="CourseInfoCard"
+          className="bg-neutral-900 w-full md:w-1/3 flex flex-col"
+        >
           <CardHeader>
             <CardTitle>
               <div className="flex flex-row gap-4  m-auto text-justify">
@@ -156,8 +160,8 @@ export default async function CoursePage(props: {
               </div>
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="flex flex-col gap-1 mb-2">
+          <CardContent className=" flex flex-col h-full justify-between">
+            <div className="flex flex-col gap-1 mb-2 ">
               {course.state == "DRAFT" ? (
                 <Badge className="w-fit mb-2" variant={"outline"}>
                   {course.state}
@@ -171,13 +175,22 @@ export default async function CoursePage(props: {
               <div className="font-normal">{nbUser}</div>
               <div className="font-normal">{nbLessons}</div>
             </div>
+            <div className="font-light italic align-top h-full">
+              {course.presentation}
+            </div>
             <div className="flex flex-col mt-4 w-full gap-2">
-              <Button variant={"secondary"} className="w-full">
+              <Link
+                href={`/admin/courses/${course.name}/edit`}
+                className={buttonVariants({ variant: "secondary" })}
+              >
                 Modifier le cours
-              </Button>
-              <Button variant={"secondary"} className="w-full">
+              </Link>
+              <Link
+                href={`/admin/courses/${course.name}/lessons`}
+                className={buttonVariants({ variant: "secondary" })}
+              >
                 Modifier les leçons
-              </Button>
+              </Link>
             </div>
           </CardContent>
         </Card>
