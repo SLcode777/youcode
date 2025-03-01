@@ -19,12 +19,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getRequiredAuthSession } from "@/lib/auth";
-import { Menu } from "lucide-react";
 import Image from "next/image";
-// import Link from "next/link";
 import { redirect } from "next/navigation";
 import ClientChecker from "./client-check";
 import { getCourse } from "./course.query";
+import { UserRow } from "./user-row";
 
 export default async function CoursePage(props: {
   params: { name: string };
@@ -112,31 +111,7 @@ export default async function CoursePage(props: {
                 {course ? (
                   course.users ? (
                     course.users.map((user) => (
-                      <TableRow key={user.id}>
-                        {/* <Link key={user.id} href={"/"}> */}
-                          <TableCell>
-                            <Image
-                              src={user.image ?? "/file.svg"}
-                              alt={user.name ?? "user avatar"}
-                              width={32}
-                              height={32}
-                              className="rounded-full"
-                            />
-                          </TableCell>
-                          <TableCell>{user?.name ?? "Nom inconnu"}</TableCell>
-                          <TableCell>{user?.email ?? "Nom inconnu"}</TableCell>
-                          <TableCell className="text-center">
-                            {user.canceled ? (
-                              <Badge variant={"destructive"}>INACTIF</Badge>
-                            ) : (
-                              <Badge variant={"outline"}>ACTIF</Badge>
-                            )}
-                          </TableCell>
-                          <TableCell className="text-center">
-                            <Menu className="h-5 w-5 mx-auto cursor-pointer hover:text-primary" />
-                          </TableCell>
-                        {/* </Link> */}
-                      </TableRow>
+                      <UserRow user={user} key={user.id} />
                     ))
                   ) : (
                     <TableRow>
