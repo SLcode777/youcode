@@ -1,10 +1,11 @@
 import prisma from "@/lib/prisma";
 
-export const getLessons = async (courseName: string) => {
+export const getLessons = async (courseName: string, userId: string) => {
   const lessons = await prisma.lesson.findMany({
     where: {
       course: {
         name: courseName,
+        creatorId: userId,
       },
     },
     orderBy: {

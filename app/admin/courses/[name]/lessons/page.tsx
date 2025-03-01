@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getRequiredAuthSession } from "@/lib/auth";
 import { Menu, Plus } from "lucide-react";
 import Link from "next/link";
 import { getLessons } from "./lesson.query";
@@ -22,10 +23,13 @@ import { getLessons } from "./lesson.query";
 export default async function AdminLessonsPage(props: {
   params: { name: string };
 }) {
+  const session = await getRequiredAuthSession();
+  console.log("session const :", session);
+
   const { name: courseName } = await props.params;
   console.log("courseName dans lessons : ", courseName);
 
-  const lessons = await getLessons(courseName);
+  const lessons = await getLessons(courseName, session.user.id);
 
   console.log("liste des leçons : ", lessons);
 
@@ -46,22 +50,22 @@ export default async function AdminLessonsPage(props: {
               <Table>
                 <TableHeader>
                   <TableRow className="flex flex-row pt-4 w-full justify-between px-4">
-                    <TableHead className="font-bold text-lg">
+                    <TableHead className="font-bold text-lg ">
                       Titre de la leçon
                     </TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody className="w-full">
+                <TableBody className="w-full gap-2">
                   {lessons.map((lesson) => (
                     <TableRow
                       key={lesson.id}
-                      className="flex flex-row w-full justify-between px-4"
+                      className="flex border border-border rounded-md w-full justify-between px-4 my-2"
                     >
                       <Link
                         href={`/admin/courses/${courseName}/lessons/${lesson.id}`}
                       >
                         {lessons ? (
-                          <TableCell className="align-middle font-semibold text-md ">
+                          <TableCell className="align-middle font-semibold text-md  flex-1 ">
                             {lesson.name}
                           </TableCell>
                         ) : null}
