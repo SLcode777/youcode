@@ -1,11 +1,17 @@
 import { Layout, LayoutHeader, LayoutTitle } from "@/components/layout/layout";
+import { NotAuthenticatedCard } from "@/components/notAuth-card";
 import { getRequiredAuthSession } from "@/lib/auth";
 import { getStudentCoursesList } from "../../../courses/[name]/course.query";
 import CourseCard from "../../../courses/course-card";
 
 export default async function MyCoursePage() {
-  const session = getRequiredAuthSession();
-  const userId = (await session).user.id;
+  const session = await getRequiredAuthSession();
+
+  const userId = session.user.id;
+
+  if (!userId) {
+    return <NotAuthenticatedCard />;
+  }
 
   const courses = await getStudentCoursesList({
     userId: userId,
