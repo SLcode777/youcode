@@ -171,6 +171,7 @@ export const getStudentCourseContent = async (
                 select: {
                   name: true,
                   image: true,
+                  id: true,
                 },
               },
             },

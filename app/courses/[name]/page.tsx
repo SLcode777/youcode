@@ -1,3 +1,4 @@
+import { LessonItem } from "@/components/features/course-content-page/lesson-item";
 import {
   Layout,
   LayoutContent,
@@ -46,7 +47,14 @@ export default async function CourseContentPage({
             <LayoutTitle>{course.name}</LayoutTitle>
           </div>
           <div className="flex flex-row gap-4 items-center h-full ">
-            <div className="text-lg font-medium">{course.creator?.name}</div>
+            <div className="flex flex-col gap-2 ">
+              <div className="text-xs text-muted-foreground">
+                Cours créé par
+              </div>
+              <div className="text-lg font-medium text-end">
+                {course.creator?.name}
+              </div>
+            </div>
             <Avatar>
               <AvatarImage
                 className="w-16 rounded-full"
@@ -59,28 +67,17 @@ export default async function CourseContentPage({
       </LayoutHeader>
       <LayoutContent>{course.presentation}</LayoutContent>
       <div className="flex flex-row gap-2  w-full h-fit">
-        <Card className="bg-accent w-1/4">
+        <Card className=" w-1/3">
           <CardHeader>
             <CardTitle>Liste des leçons</CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-col">
-            {course.lessons.length === 0 ? (
-              <p>No lessons yet</p>
-            ) : (
-              <div className="flex flex-col gap-2 ">
-                {course.lessons.map((lesson) => (
-                  <div
-                    key={lesson.id}
-                    className="text-md px-4 py-2 border rounded-lg bg-background hover:bg-muted-foreground/10"
-                  >
-                    {lesson.name}
-                  </div>
-                ))}
-              </div>
-            )}
+          <CardContent>
+            {course.creator ? (
+              <LessonItem courseName={course.name} userId={userId} />
+            ) : null}
           </CardContent>
         </Card>
-        <Card className="flex w-3/4">
+        <Card className="flex w-2/3">
           <CardHeader>
             <CardTitle>Contenu de la leçon sélectionnée</CardTitle>
           </CardHeader>

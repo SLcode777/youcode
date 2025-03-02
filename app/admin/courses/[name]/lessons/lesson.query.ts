@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { LessonState } from "@prisma/client";
 
 export const getLessons = async (courseName: string, userId: string) => {
   const lessons = await prisma.lesson.findMany({
@@ -26,4 +27,35 @@ export const getLesson = async (lessonId: string) => {
   console.log(lesson);
 
   return lesson;
+};
+
+export const getLessonsWithProgressDetail = async (
+  courseName: string,
+  userId: string
+) => {
+  const lessons = await prisma.lesson.findMany({
+    where: {
+      course: {
+        name: courseName,
+      },
+      state: {
+        not: LessonState.HIDDEN,
+      },
+    },
+    orderBy: {
+      rank: "asc",
+    },
+    include: {
+      users: {
+        where: {
+          userId: userId,
+        },
+        select: {
+          progress: true,
+        },
+      },
+    },
+  });
+
+  return lessons;
 };
