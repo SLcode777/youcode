@@ -89,7 +89,7 @@ export default async function CoursePage(props: {
       <div className="flex flex-col-reverse md:flex-row gap-2">
         <Card
           id="UserCard"
-          className="bg-neutral-900 w-full md:w-2/3 h-[36dvh] flex flex-col"
+          className="bg-accent w-full md:w-2/3 h-[36dvh] flex flex-col"
         >
           <CardHeader>
             <CardTitle className="text-justify font-semibold text-lg">
@@ -143,7 +143,7 @@ export default async function CoursePage(props: {
         </Card>
         <Card
           id="CourseInfoCard"
-          className="bg-neutral-900 w-full md:w-1/3 flex flex-col"
+          className="bg-accent w-full md:w-1/3 flex flex-col"
         >
           <CardHeader>
             <CardTitle>
@@ -181,13 +181,13 @@ export default async function CoursePage(props: {
             <div className="flex flex-col mt-4 w-full gap-2">
               <Link
                 href={`/admin/courses/${course.name}/edit`}
-                className={buttonVariants({ variant: "secondary" })}
+                className={buttonVariants({ variant: "default" })}
               >
                 Modifier le cours
               </Link>
               <Link
                 href={`/admin/courses/${course.name}/lessons`}
-                className={buttonVariants({ variant: "secondary" })}
+                className={buttonVariants({ variant: "default" })}
               >
                 Modifier les leçons
               </Link>

@@ -30,9 +30,6 @@ export function UserRow({ user }: UserRowProps) {
       }}
     >
       <TableCell>
-        <div>{user.id}</div>
-      </TableCell>
-      <TableCell>
         <Image
           src={user.image ?? "/file.svg"}
           alt={user.name ?? "user avatar"}

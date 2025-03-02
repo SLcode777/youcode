@@ -1,3 +1,4 @@
+import { CourseState } from "@prisma/client";
 import prisma from "../../../../src/lib/prisma";
 
 export const getCourse = async ({
@@ -58,9 +59,6 @@ export const getCourse = async ({
     };
   });
 
-  // console.log("Fetching users for:", courseName);
-  // console.log("Fetched users:", users);
-
   return {
     ...course,
     users,
@@ -82,3 +80,27 @@ export async function Course({ params }: CourseProps) {
   });
   console.log("console detail du cours: ", course);
 }
+
+export const getCoursesList = async ({ state }: { state: CourseState }) => {
+  const courses = await prisma.course.findMany({
+    where: {
+      state: state,
+    },
+    select: {
+      id: true,
+      state: true,
+      logo: true,
+      name: true,
+      presentation: false,
+      creator: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
+  });
+
+  console.log("coursesList query :", courses);
+  return courses;
+};
