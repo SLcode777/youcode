@@ -17,7 +17,7 @@ export default function CourseCard({
   courseUrl: string;
 }) {
   return (
-    <Card className="p-4 bg-secondary hover:shadow-xs hover:shadow-red-500">
+    <Card className="p-4 bg-secondary hover:shadow-xs hover:shadow-muted-foreground">
       <Link href={courseUrl}>
         <div className="flex flex-row gap-4 items-center ">
           <Image src={courseLogo} alt="course-logo" width={64} height={64} />

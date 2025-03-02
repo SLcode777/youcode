@@ -1,11 +1,11 @@
 // src/components/ui/Typography.
+import { cn } from "@/../src/lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
 import type {
   ComponentPropsWithoutRef,
   ElementType,
   PropsWithChildren,
 } from "react";
-import { cn } from "@/../src/lib/utils";
 
 type PolymorphicAsProp<E extends ElementType> = {
   as?:
@@ -32,7 +32,7 @@ const typographyVariants = cva("", {
       large: "text-lg font-semibold",
       small: "text-sm font-medium leading-none",
       muted: "text-sm text-muted-foreground",
-      link: "text-indigo-500 font-medium hover:underline",
+      link: "text-muted-foreground font-medium hover:underline",
     },
   },
   defaultVariants: {

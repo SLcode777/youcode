@@ -1,4 +1,4 @@
-import { CourseState } from "@prisma/client";
+import { CourseState, Prisma } from "@prisma/client";
 import prisma from "../../../../src/lib/prisma";
 
 export const getCourse = async ({
@@ -104,3 +104,7 @@ export const getCoursesList = async ({ state }: { state: CourseState }) => {
   console.log("coursesList query :", courses);
   return courses;
 };
+
+export type CoursesCard = Prisma.PromiseReturnType<
+  typeof getCoursesList
+>[number];
