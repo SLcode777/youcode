@@ -105,7 +105,6 @@ export const getPublishedCoursesList = async ({
     },
   });
 
-  console.log("coursesList query :", courses);
   return courses;
 };
 
@@ -136,10 +135,54 @@ export const getStudentCoursesList = async ({ userId }: { userId: string }) => {
     },
   });
 
-  console.log("coursesList query :", courses);
   return courses?.course;
 };
 
 export type StudendCoursesCard = Prisma.PromiseReturnType<
   typeof getStudentCoursesList
 >[];
+
+export const getStudentCourseContent = async (
+  userId: string,
+  courseName: string
+) => {
+  const enrollment = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      CourseOnUser: {
+        where: {
+          course: {
+            name: courseName,
+            state: CourseState.PUBLISHED,
+          },
+        },
+        select: {
+          course: {
+            select: {
+              id: true,
+              name: true,
+              logo: true,
+              presentation: true,
+              state: true,
+              lessons: true,
+              creator: {
+                select: {
+                  name: true,
+                  image: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!enrollment || enrollment.CourseOnUser.length === 0) {
+    return null;
+  }
+
+  return enrollment.CourseOnUser[0].course;
+};

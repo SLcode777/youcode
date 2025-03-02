@@ -33,7 +33,7 @@ export default async function MyCoursePage() {
             courseAuthorName={
               course.creator?.name ? course.creator.name : "Auteur Inconnu"
             }
-            courseUrl={`/admin/courses/${course.name}`}
+            courseUrl={`/courses/${course.name}`}
           />
         ))}
       </div>

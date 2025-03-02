@@ -3,11 +3,15 @@
 import { useMutation } from "@tanstack/react-query";
 import { Loader, LogIn } from "lucide-react";
 import { signIn } from "next-auth/react";
-import { Button } from "../../ui/button";
+import { Button, ButtonProps } from "../../ui/button";
 
-// export type LoginButtonProps = {};
+type LoginButtonProps = ButtonProps;
 
-export default function LoginButton() {
+export default function LoginButton({
+  size = "sm",
+  variant = "outline",
+  ...props
+}: LoginButtonProps) {
   const mutation = useMutation({
     mutationFn: async () => {
       signIn();
@@ -17,12 +21,13 @@ export default function LoginButton() {
   return (
     <Button
       className="bg-transparent"
-      variant="outline"
-      size="sm"
+      variant={variant}
+      size={size}
       onClick={() => {
         mutation.mutate();
       }}
       disabled={mutation.isPending}
+      {...props}
     >
       {mutation.isPending ? (
         <Loader className="mr-2" size={12} />
