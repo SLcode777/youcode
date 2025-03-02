@@ -81,7 +81,11 @@ export async function Course({ params }: CourseProps) {
   console.log("console detail du cours: ", course);
 }
 
-export const getCoursesList = async ({ state }: { state: CourseState }) => {
+export const getPublishedCoursesList = async ({
+  state,
+}: {
+  state: CourseState;
+}) => {
   const courses = await prisma.course.findMany({
     where: {
       state: state,
@@ -105,6 +109,37 @@ export const getCoursesList = async ({ state }: { state: CourseState }) => {
   return courses;
 };
 
-export type CoursesCard = Prisma.PromiseReturnType<
-  typeof getCoursesList
+export type PublishedCoursesCard = Prisma.PromiseReturnType<
+  typeof getPublishedCoursesList
 >[number];
+
+export const getStudentCoursesList = async ({ userId }: { userId: string }) => {
+  const courses = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      name: true,
+      CourseOnUser: true,
+
+      course: {
+        select: {
+          id: true,
+          name: true,
+          logo: true,
+          presentation: true,
+          state: true,
+          lessons: true,
+          creator: true,
+        },
+      },
+    },
+  });
+
+  console.log("coursesList query :", courses);
+  return courses?.course;
+};
+
+export type StudendCoursesCard = Prisma.PromiseReturnType<
+  typeof getStudentCoursesList
+>[];
