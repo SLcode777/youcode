@@ -1,4 +1,4 @@
-import { LessonItem } from "@/components/features/course-content-page/lesson-item";
+import LessonList from "@/components/features/course-content-page/lesson-list";
 import {
   Layout,
   LayoutContent,
@@ -8,15 +8,18 @@ import {
 import { NotAuthenticatedCard } from "@/components/notAuth-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAuthSession } from "@/lib/auth";
+import { LessonWithProgress } from "@/lib/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { getStudentCourseContent } from "../../admin/courses/[name]/course.query";
+import { getLessonsWithProgressDetail } from "../../admin/courses/[name]/lessons/lesson.query";
+import LessonContent from "./lessons/page";
+import { Progress } from "@prisma/client";
 
-export default async function CourseContentPage({
-  params,
-}: {
+export default async function CourseContentPage(props: {
   params: { name: string };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const resolvedParams = await Promise.resolve(params);
+  const resolvedParams = await Promise.resolve(props.params);
   const courseName = resolvedParams.name;
 
   const session = await getAuthSession();
@@ -27,6 +30,23 @@ export default async function CourseContentPage({
   }
 
   const course = await getStudentCourseContent(userId, courseName);
+
+  const lessonsRaw = await getLessonsWithProgressDetail(courseName, userId);
+
+  const lessons: LessonWithProgress[] = lessonsRaw.map((lesson) => ({
+    ...lesson,
+    progress:
+      lesson.users && lesson.users.length > 0
+        ? lesson.users[0].progress
+        : Progress.NOT_STARTED,
+  }));
+
+  const searchParams = await props.searchParams;
+  console.log(searchParams);
+
+  // if (!searchParams.page) {
+  //   redirect(`/courses/${courseName}?lessonRank=1`);
+  // }
 
   if (!course) {
     return <p>No course found</p>;
@@ -73,14 +93,20 @@ export default async function CourseContentPage({
           </CardHeader>
           <CardContent>
             {course.creator ? (
-              <LessonItem courseName={course.name} userId={userId} />
+              <LessonList lessons={lessons} courseName={course.name} />
             ) : null}
           </CardContent>
         </Card>
-        <Card className="flex w-2/3">
+        <Card className="flex w-2/3 flex-col">
           <CardHeader>
             <CardTitle>Contenu de la leçon sélectionnée</CardTitle>
           </CardHeader>
+          <CardContent>
+            <LessonContent
+              params={{ name: course.name }}
+              searchParams={searchParams}
+            />
+          </CardContent>
         </Card>
       </div>
     </Layout>
