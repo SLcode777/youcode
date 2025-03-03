@@ -26,7 +26,10 @@ import Link from "next/link";
 import { getCourse } from "./course.query";
 import { UserRow } from "./user-row";
 
-export default async function CoursePage() {
+export default async function CoursePage(props: {
+  params: { name: string };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const session = await getRequiredAuthSession();
   const searchParams = await props.searchParams;
   console.log("search Params de la page de cours : ", searchParams);
