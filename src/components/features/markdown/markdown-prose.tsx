@@ -1,15 +1,14 @@
-"use client";
-
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-interface MarkdownProseProps {
+export type MarkdownProseProps = {
   markdown: string;
-}
-export const MarkdownProse = ({ markdown }: MarkdownProseProps) => {
+};
+
+export const MarkdownProse = (props: MarkdownProseProps) => {
   return (
-    <div className="prose">
-      <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>;
+    <div className="prose dark:prose-invert lg:prose-lg">
+      <Markdown remarkPlugins={[remarkGfm]}>{props.markdown}</Markdown>
     </div>
   );
 };

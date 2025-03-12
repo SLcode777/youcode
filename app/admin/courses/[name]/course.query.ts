@@ -155,7 +155,9 @@ export const getStudentCourseContent = async (
         where: {
           course: {
             name: courseName,
-            state: CourseState.PUBLISHED,
+            state: {
+              in: ["PUBLISHED"],
+            },
           },
         },
         select: {

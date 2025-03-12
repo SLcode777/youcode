@@ -15,6 +15,7 @@ import { getLessonsWithProgressDetail } from "../../admin/courses/[name]/lessons
 import LessonContent from "./lessons/page";
 import { Progress } from "@prisma/client";
 import { Typography } from "@/components/ui/Typography";
+import { MarkdownProse } from "@/components/features/markdown/markdown-prose";
 
 export default async function CourseContentPage(props: {
   params: { name: string };
@@ -44,7 +45,6 @@ export default async function CourseContentPage(props: {
 
   const searchParams = await props.searchParams;
   console.log(searchParams);
-
 
   if (!course) {
     return <p>No course found</p>;
@@ -84,14 +84,11 @@ export default async function CourseContentPage(props: {
         <hr />
       </LayoutHeader>
       <LayoutContent>
-        <Typography >
-          Présentation
-          </Typography>
-          <div>
-          {course.presentation}
-
-          </div>
-          </LayoutContent>
+        <div className="flex flex-col gap-4 mb-4">
+          <Typography variant="h3">Présentation</Typography>
+          <MarkdownProse>{course.presentation}</MarkdownProse>
+        </div>
+      </LayoutContent>
       <div className="flex flex-row gap-2  w-full h-fit">
         <Card className=" w-1/3">
           <CardHeader>
