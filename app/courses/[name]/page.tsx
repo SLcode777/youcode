@@ -14,6 +14,7 @@ import { getStudentCourseContent } from "../../admin/courses/[name]/course.query
 import { getLessonsWithProgressDetail } from "../../admin/courses/[name]/lessons/lesson.query";
 import LessonContent from "./lessons/page";
 import { Progress } from "@prisma/client";
+import { Typography } from "@/components/ui/Typography";
 
 export default async function CourseContentPage(props: {
   params: { name: string };
@@ -44,9 +45,6 @@ export default async function CourseContentPage(props: {
   const searchParams = await props.searchParams;
   console.log(searchParams);
 
-  // if (!searchParams.page) {
-  //   redirect(`/courses/${courseName}?lessonRank=1`);
-  // }
 
   if (!course) {
     return <p>No course found</p>;
@@ -85,7 +83,15 @@ export default async function CourseContentPage(props: {
         </div>
         <hr />
       </LayoutHeader>
-      <LayoutContent>{course.presentation}</LayoutContent>
+      <LayoutContent>
+        <Typography >
+          Présentation
+          </Typography>
+          <div>
+          {course.presentation}
+
+          </div>
+          </LayoutContent>
       <div className="flex flex-row gap-2  w-full h-fit">
         <Card className=" w-1/3">
           <CardHeader>

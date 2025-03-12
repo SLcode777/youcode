@@ -50,7 +50,7 @@ export default async function AccountPage(props: AccountPageProps) {
         <CardContent>
           <div className="flex flex-col gap-2">
             <Link
-              href="/account/settings"
+              href="/account/edit"
               className={clsx(
                 buttonVariants({
                   variant: "outline",
